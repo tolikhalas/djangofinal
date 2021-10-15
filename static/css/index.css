@@ -1,0 +1,27 @@
+.user-info {
+    color: #848484;
+    font-size: 14px;
+}
+
+.user-info .author {
+    color: #646464;
+    font-weight: bold;
+}
+
+.date {
+    color: #646464;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.no-comments {
+    color: #848484;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.date .new-article {
+    padding-left: 20px;
+    color: #ff0000;
+    font-size: bold;
+}

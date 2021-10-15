@@ -4,20 +4,20 @@
 
 <div class ="row">
     
-        <div class="col-md-10 offset-md-3">
-            <div class="col-lg-8">
-                <h3>Makaleler</h3>
+        <div class="col-md-10 offset-md-2">
+            <div class="col-lg-10">
+                <h3>Статті</h3>
                 <hr>
                 </div>
         </div>
 </div>
 <div class ="row">
-    <div class="col-md-10 offset-md-3">
-        <div class="col-lg-8">
+    <div class="col-md-10 offset-md-2">
+        <div class="col-lg-10">
             <form>
                  {% csrf_token %} 
-                <input type="text" name = "keyword" class="input-sm" maxlength="64" placeholder="Ara...">
-              <button type="submit" class="btn btn-danger">Ara</button>
+                <input type="text" name = "keyword" class="input-sm" maxlength="64" placeholder="Пошук...">
+              <button type="submit" class="btn btn-danger">Пошук</button>
             </form>
       </div>
     </div>
@@ -29,39 +29,38 @@
 
 {% for article in articles %}
 <div class="row">
-    <div class="col-md-10 offset-md-3">
+    <div class="col-md-10 offset-md-2">
 
     <!-- Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-lg-10">
 
       <!-- Title -->
       <a href="{% url 'article:detail' article.slug %}"><h2 class="mt-4">{{article.title}}</h2></a> 
         
       <!-- Author -->
-      <p class="lead">
+      <p class="lead user-info">
         
-        {{article.author.username}} tarafından yayınlandı
-      </p>
+        Автор статті <span class="author">{{article.author.username}}</span>
 
-      <hr>
-
-      <!-- Date/Time -->
-      <p>{{article.created_date}}</p>
-      <hr>
       <!-- Preview Image -->
       {% if article.article_image %}
-      <a href="{% url 'article:detail' article.slug %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+        <a href="{% url 'article:detail' article.slug %}"><img class="img-fluid rounded" style="margin-top:10px;" src="{{article.article_image.url}}" alt=""></a>
+        <hr>
       {% endif %}
      
 
-      <hr>
 
       <!-- Post Content -->
       <p class="lead">
           {{article.content|safe|truncatewords:50}}
       </p>
 
-      <a href="{% url 'article:detail' article.slug %}" class ="btn btn-danger my-3">Devamını Oku</a>
+      <!-- Date/Time -->
+      <p class="date">{{article.created_date}}
+        {% if article.published_recently %}<span class="new-article">Нова стаття!</span>{% endif %}
+      </p>
+
+      <a href="{% url 'article:detail' article.slug %}" class ="btn btn-danger my-3">Читати далі</a>
       <hr>
          
         </div>
@@ -77,7 +76,7 @@
     <div class="col-md-10 offset-md-3">
         <div class="col-lg-8">
 <div class = "alert alert-danger">
-   Makale Bulunamadı
+  Статті не знайдено
 </div>
 </div>
 </div>

@@ -37,7 +37,7 @@ def addArticle(request):
         article.author = request.user
         article.save()
 
-        messages.success(request,"Makale başarıyla oluşturuldu")
+        messages.success(request,"Статтю успішно додано")
         return redirect("article:dashboard")
     return render(request,"addarticle.html",{"form":form})
 def detail(request,slug):
@@ -56,7 +56,7 @@ def updateArticle(request, slug):
         article.author = request.user
         article.save()
 
-        messages.success(request,"Makale başarıyla güncellendi")
+        messages.success(request,"Стаття успішно відредагована")
         return redirect("article:dashboard")
 
 
@@ -67,14 +67,16 @@ def deleteArticle(request,slug):
 
     article.delete()
 
-    messages.success(request,"Makale Başarıyla Silindi")
+    messages.success(request,"Статтю успішно видалено")
 
     return redirect("article:dashboard")
+
+@login_required(login_url = "user:login")
 def addComment(request,slug):
     article = get_object_or_404(Article, slug=slug)
 
     if request.method == "POST":
-        comment_author = request.POST.get("comment_author")
+        comment_author = request.user
         comment_content = request.POST.get("comment_content")
 
         newComment = Comment(comment_author  = comment_author, comment_content = comment_content)

@@ -1,84 +1,93 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<div class="row">
+  <div class="row">
 
     <!-- Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-lg-10 offset-lg-1">
 
       <!-- Title -->
       <h3 class="mt-4">{{article.title}}</h3>
 
       <!-- Author -->
-      <p class="lead">
+      <p class="lead user-info">
         
-        {{article.author.username}} tarafından yayınlandı
+        Автор статті <span class="author">{{article.author.username}}</span> 
       </p>
 
       <hr>
 
-      <!-- Date/Time -->
-      <p>{{article.created_date}}</p>
 
-      <hr>
 
       <!-- Preview Image -->
       {% if article.article_image %}
-      <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+        <div class="article-image" style="padding-top:10px; padding-bottom:10px;">
+          <hr>
+            <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+          <hr>
+        </div>
       {% endif %}
      
 
-      <hr>
 
       <!-- Post Content -->
       <p class="lead">
           {{article.content|safe}}
       </p>
 
-      <hr>
+      <!-- Date/Time -->
+      <p class="date">{{article.created_date}}</p>
 
-      <h4>Yorumlar {% if comments %}({{comments.count }}){% endif %}</h4>
       <hr>
-      {% if comments %}
-      {% for comment in comments  %}
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">{{ comment.comment_author}}</h5>
-            {{comment.comment_date}} <br>
-            {{comment.comment_content}}
-          </div>
-        </div>
-      {% endfor %}
       
-      
-      {% else %}
-      <div class ="alert alert-danger">
-        Bu makaleye herhangi bir yorum yazılmamış,ilk yorum yapan siz olun!
-      </div>
-      {% endif %}
-
+      {% if request.user.is_authenticated %}
       <div class="card my-4 container">
-          <h5 class="card-header">Yorum Ekle:</h5>
+          <h5 class="card-header">Додати коментар</h5>
           <div class="card-body">
             <form method = "post" action = "{% url 'article:comment' article.slug %}">
               {% csrf_token %}
               <div class="form-group">
-                  <label for="formGroupExampleInput">İsim</label>
-                  <input name = "comment_author" type="text" class="form-control" id="formGroupExampleInput" placeholder="İsminizi girin">
-                </div>
-              <div class="form-group">
-                  <label for="formGroupExampleInput">Yorum</label>
-                <textarea name = "comment_content" class="form-control" rows="3"></textarea>
+                <textarea name = "comment_content" class="form-control" rows="3" placeholder="Текст коментару"></textarea>
               </div>
-              <button type="submit" class="btn btn-danger my-3">Ekle</button>
+              <button type="submit" class="btn btn-danger my-3">Додати коментар</button>
             </form>
           </div>
-        </div>
-        </div>
-        
       </div>
 
+      {% else %}
+        <p class="no-comments">
+          Коментарі можуть залишати лише авторизовані користувачі
+        </p>
+      {% endif %}
+
+      <hr>
+
+      {% if comments %}
+      <div class="col-lg-12">
+        <h4>Кількість коментарів {% if comments %}({{comments.count }}){% endif %}</h4>
+        <hr>
+        {% for comment in comments  %}
+        
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">{{ comment.comment_author}}</h5>
+            <p class="date">{{comment.comment_date}}</p>
+            {{comment.comment_content}}
+          </div>
+        </div>
+        {% endfor %}
       
+      
+      {% else %}
+        <div class ="alert alert-danger">
+          До цієї статті немає коментарів, коментуйте першим!
+        </div>
+      </div>
+      {% endif %}
+
+      
+        
+  </div>
 
 {% endblock body %}

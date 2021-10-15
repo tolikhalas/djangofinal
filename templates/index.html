@@ -2,19 +2,20 @@
 
 {% block body %}
 
-<div class="jumbotron text-center">
-        <h3>Yazılım Bilimi Bloğuna Hoşgeldiniz</h3>
-        <p>Bu blogta geliştiriciler olarak blog yazılarınızı paylaşabilirsiniz ve insanlara yardımcı olabilirsiniz.</p>
-</div>
-
-
-<p>
+<p class="user-info">
         {% if request.user.is_authenticated %}
-                Giriş Yapılmış, {{request.user.username}}
+                Ви ввійшли, <span class="author">{{request.user.username}}</span>
         {% else %}
-                Giriş Yapılmamış
+                Ви не ввійшли
         {% endif %}
 
 </p>
+
+<div class="jumbotron text-center">
+        <h3>Ласкаво просимо до блогу Good Comedian</h3>
+        <p>Тут ви зможете ділитися своїми публікаціями в блозі та допомагати людям.</p>
+</div>
+
+
 {% endblock body %}
 
