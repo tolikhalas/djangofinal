@@ -25,7 +25,7 @@ SECRET_KEY = '&49ga4rqxrp)^w=%ed&s4qf0*)1yvl!$6j=e@b^^e=i-s3g+@+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://good-comedian-blog.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'good-comedian-blog.herokuapp.com']
 
 
 # Application definition
